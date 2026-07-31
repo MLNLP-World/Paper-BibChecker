@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper-bibchecker"
+version = "0.1.0"
+description = "检查引用的 BibTeX 条目是否对应真实文献。"
+requires-python = ">=3.10"
+
+[project.scripts]
+bibchecker = "bibchecker.cli:main"

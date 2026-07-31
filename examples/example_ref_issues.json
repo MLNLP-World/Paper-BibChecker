@@ -1,0 +1,223 @@
+{
+  "bib": "examples/example_ref.bib",
+  "issue_count": 29,
+  "missing_citation_keys": [],
+  "issues": [
+    {
+      "key": "bardhan2024icu",
+      "problems": [
+        "检索结果不足以确认或否定该引用",
+        "没有获得标题和作者同时可靠匹配的记录"
+      ]
+    },
+    {
+      "key": "dong2023raft",
+      "problems": [
+        "标识符对应真实论文，但标题可能是不同版本的写法",
+        "标题：Bib='Raft: Reward ranked finetuning for aligning language models with human feedback'；检索='RAFT: Reward rAnked FineTuning for Generative Foundation Model Alignment'",
+        "作者新增：Tong Zhang（检索第8位）",
+        "作者删除：Tong Wang（Bib第8位）"
+      ]
+    },
+    {
+      "key": "doughty2023",
+      "problems": [
+        "标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标",
+        "标题：Bib='Evaluating GPT-4 for multiple-choice question generation in programming education'；检索='Tell me, what are you most afraid of? Exploring the Effects of Agent Representation on Information Disclosure in Human-Chatbot Interaction'",
+        "作者新增：Anna Stock（检索第1位）；Stephan Schlögl（检索第2位）；Aleksander Groth（检索第3位）",
+        "作者删除：Matthew Doughty（Bib第1位）；Hao Wan（Bib第2位）"
+      ]
+    },
+    {
+      "key": "dubey2024llama",
+      "problems": [
+        "3 个已完成的独立学术数据源均未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "ethayarajh2024kto",
+      "problems": [
+        "标识符对应真实论文，但标题可能是不同版本的写法",
+        "标题：Bib='Kahneman-Tversky Optimization (KTO): A New Way to Align Language Models'；检索='KTO: Model Alignment as Prospect Theoretic Optimization'",
+        "作者新增：Winnie Xu（检索第2位）；Niklas Muennighoff（检索第3位）；Douwe Kiela（检索第5位）",
+        "作者删除：Lawrence Gao（Bib第2位）"
+      ]
+    },
+    {
+      "key": "goyal2021benchmark",
+      "problems": [
+        "1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "hendrycks2021mmlu",
+      "problems": [
+        "1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配",
+        "年份：Bib=2021；检索=2020",
+        "会议或期刊：Bib='Proceedings of the International Conference on Learning Representations (ICLR)'；检索='CoRR 2020'"
+      ]
+    },
+    {
+      "key": "kim2025dynamic",
+      "problems": [
+        "1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "li2024numinamath",
+      "problems": [
+        "2 个已完成的独立学术数据源均未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "li2025self_guided",
+      "problems": [
+        "2 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "liu2023bridging",
+      "problems": [
+        "标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标",
+        "标题：Bib='Bridging the Gap Between Supervised Fine-Tuning and Reinforcement Learning'；检索='Testing a stochastic acceleration model of pulsar wind nebulae: Early evolution of a wind nebula associated with SN 1986J'",
+        "作者新增：Shuta J. Tanaka（检索第1位）；Kazumi Kashiyama（检索第2位）",
+        "作者删除：Hao Liu（Bib第1位）；Zixuan Ji（Bib第2位）；Di Lu（Bib第3位）"
+      ]
+    },
+    {
+      "key": "liu2024dft",
+      "problems": [
+        "标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标",
+        "标题：Bib='Direct Fine-Tuning on Rewarded Trajectories for Language Model Alignment'；检索='Optimal constants in concentration inequalities on the sphere and in the Gauss space'",
+        "作者新增：Guillaume Aubrun（检索第1位）；Justin Jenkinson（检索第2位）；Stanislaw J. Szarek（检索第3位）",
+        "作者删除：Jason Liu（Bib第1位）；Zhiyuan Chen（Bib第2位）；Ji-Woo Park（Bib第3位）"
+      ]
+    },
+    {
+      "key": "liu2025principled",
+      "problems": [
+        "1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "marino2019fine",
+      "problems": [
+        "2 个已完成的独立学术数据源均未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "mitchell2024leveraging",
+      "problems": [
+        "1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "park2025reward_reweighted",
+      "problems": [
+        "标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标",
+        "标题：Bib='Reward-Reweighted SFT: An Offline Policy Refinement Method'；检索='Noncontextual ontological models of operational probabilistic theories'",
+        "作者新增：Sina Soltani（检索第1位）；Marco Erba（检索第2位）；David Schmid（检索第3位）；John H. Selby（检索第4位）",
+        "作者删除：Ji-Woo Park（Bib第1位）；Yifan Chen（Bib第2位）；Denny Zhou（Bib第3位）"
+      ]
+    },
+    {
+      "key": "rafailov2023dpo",
+      "problems": [
+        "标识符和标题对应真实论文，但存在字段差异",
+        "作者顺序：Chelsea Finn（Bib第5位→检索第6位）；Christopher D. Manning（Bib第6位→检索第5位）"
+      ]
+    },
+    {
+      "key": "rajani2025scalpel",
+      "problems": [
+        "标识符和标题对应真实论文，但存在字段差异",
+        "作者新增：Aryo Pradipta Gema（检索第2位）；Seraphina Goldfarb-Tarrant（检索第3位）",
+        "作者删除：Aryo Pradipta（Bib第2位）；Gema Seraphina Goldfarb-Tarrant（Bib第3位）"
+      ]
+    },
+    {
+      "key": "schatzmann2007evaluating",
+      "problems": [
+        "检索结果不足以确认或否定该引用",
+        "标题：Bib='Evaluating agenda-based user simulation for reinforcement learning of dialogue management'；检索='A survey of statistical user simulation techniques for reinforcement-learning of dialogue management strategies'",
+        "作者新增：KARL WEILHAMMER（检索第2位）；MATT STUTTLE（检索第3位）；STEVE YOUNG（检索第4位）",
+        "作者删除：Daniel Jurafsky（Bib第2位）；Michael Galley（Bib第3位）；David Trevillian（Bib第4位）",
+        "年份：Bib=2007；检索=2006"
+      ]
+    },
+    {
+      "key": "singh2023beyond",
+      "problems": [
+        "1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "stiennon2020learning",
+      "problems": [
+        "找到可信论文，但存在字段差异",
+        "作者新增：Chelsea Voss（检索第6位）；Alec Radford（检索第7位）；Dario Amodei（检索第8位）；Paul F Christiano（检索第9位）",
+        "作者删除：Christopher Hesse（Bib第6位）；John Schulman（Bib第7位）；Jacob Hilton（Bib第8位）"
+      ]
+    },
+    {
+      "key": "touvron2024context",
+      "problems": [
+        "1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "wei2021finetuned",
+      "problems": [
+        "标识符和标题对应真实论文，但存在字段差异",
+        "作者新增：Kelvin Guu（检索第4位）；Adams Wei Yu（检索第5位）；Brian Lester（检索第6位）；Nan Du（检索第7位）；Andrew M. Dai（检索第8位）",
+        "作者删除：Kelvin Gu（Bib第4位）；Aitor Lewkowycz（Bib第5位）；Yao Lu（Bib第6位）；Ambrose Slone（Bib第7位）；Barret Zoph（Bib第9位）"
+      ]
+    },
+    {
+      "key": "wu2024alternating",
+      "problems": [
+        "标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标",
+        "标题：Bib='Alternating between On-Policy and Off-Policy Updates for Efficient and Stable LLM Alignment'；检索='Unambiguous fluctuation decomposition of the self-energy: pseudogap physics beyond spin fluctuations'",
+        "作者新增：Yang Yu（检索第1位）；Sergei Iskakov（检索第2位）；Emanuel Gull（检索第3位）；Karsten Held（检索第4位）；Friedrich Krien（检索第5位）",
+        "作者删除：Jeff Wu（Bib第1位）；Long Ouyang（Bib第2位）；Nisan Stiennon（Bib第3位）"
+      ]
+    },
+    {
+      "key": "yue2025does",
+      "problems": [
+        "标识符和标题对应真实论文，但存在字段差异",
+        "作者新增：Yang Yue（检索第6位）"
+      ]
+    },
+    {
+      "key": "zhang2020spectral",
+      "problems": [
+        "检索结果不足以确认或否定该引用",
+        "没有获得标题和作者同时可靠匹配的记录"
+      ]
+    },
+    {
+      "key": "zhao2023reward",
+      "problems": [
+        "标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标",
+        "标题：Bib='Reward Model Fine-Tuning using Relative Gradient Updates'；检索='Near-Field Aeroacoustic Shape Optimization at Low Reynolds Numbers'",
+        "作者新增：Mohsen Hamedi（检索第1位）；Brian Vermeire（检索第2位）",
+        "作者删除：Weizhe Zhao（Bib第1位）；Benjamin Packer（Bib第2位）；Ilya Kostrikov（Bib第3位）"
+      ]
+    },
+    {
+      "key": "zhou2023prefix",
+      "problems": [
+        "1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配"
+      ]
+    },
+    {
+      "key": "zhu2023survey",
+      "problems": [
+        "标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标",
+        "标题：Bib='A survey on efficient deployment of large language models'；检索='Comparing Traditional and LLM-based Search for Consumer Choice: A Randomized Experiment'",
+        "大部分作者无法对应"
+      ]
+    }
+  ]
+}

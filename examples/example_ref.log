@@ -1,0 +1,351 @@
+[1/32] bardhan2024icu  | 已用 1.02s  | 平均每条 1.02s
+[❓ 无法确认]
+  结论：检索结果不足以确认或否定该引用
+
+[2/32] dong2023raft  | 已用 2.03s  | 平均每条 1.02s
+[⚠️ 信息需核对]
+  结论：标识符对应真实论文，但标题可能是不同版本的写法
+  差异：
+    • 标题：Bib='Raft: Reward ranked finetuning for aligning language models with human feedback'；检索='RAFT: Reward rAnked FineTuning for Generative Foundation Model Alignment'
+    • 作者新增：Tong Zhang（检索第8位）
+    • 作者删除：Tong Wang（Bib第8位）
+  来源：arxiv · https://arxiv.org/abs/2304.06767v1
+
+[3/32] doughty2023  | 已用 3.05s  | 平均每条 1.02s
+[❌ 疑似幻觉]
+  结论：标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+  差异：
+    • 标题：Bib='Evaluating GPT-4 for multiple-choice question generation in programming education'；检索='Tell me, what are you most afraid of? Exploring the Effects of Agent Representation on Information Disclosure in Human-Chatbot Interaction'
+    • 作者新增：Anna Stock（检索第1位）；Stephan Schlögl（检索第2位）；Aleksander Groth（检索第3位）
+    • 作者删除：Matthew Doughty（Bib第1位）；Hao Wan（Bib第2位）
+  来源：arxiv · https://arxiv.org/abs/2307.12345v1
+
+[4/32] dubey2024llama  | 已用 4.07s  | 平均每条 1.02s
+[❌ 疑似幻觉]
+  结论：3 个已完成的独立学术数据源均未找到可信标题匹配
+
+[5/32] ethayarajh2024kto  | 已用 5.21s  | 平均每条 1.04s
+[⚠️ 信息需核对]
+  结论：标识符对应真实论文，但标题可能是不同版本的写法
+  差异：
+    • 标题：Bib='Kahneman-Tversky Optimization (KTO): A New Way to Align Language Models'；检索='KTO: Model Alignment as Prospect Theoretic Optimization'
+    • 作者新增：Winnie Xu（检索第2位）；Niklas Muennighoff（检索第3位）；Douwe Kiela（检索第5位）
+    • 作者删除：Lawrence Gao（Bib第2位）
+  来源：arxiv · https://arxiv.org/abs/2402.01306v1
+
+[6/32] goyal2021benchmark  | 已用 6.35s  | 平均每条 1.06s
+[❌ 疑似幻觉]
+  结论：1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+
+[7/32] hendrycks2021mmlu  | 已用 7.49s  | 平均每条 1.07s
+[❌ 疑似幻觉]
+  结论：1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  差异：
+    • 年份：Bib=2021；检索=2020
+    • 会议或期刊：Bib='Proceedings of the International Conference on Learning Representations (ICLR)'；检索='CoRR 2020'
+  来源：openreview · https://openreview.net/forum?id=M4vJxtkqaf
+
+[8/32] kim2025dynamic  | 已用 8.63s  | 平均每条 1.08s
+[❌ 疑似幻觉]
+  结论：1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+
+[9/32] li2024numinamath  | 已用 9.60s  | 平均每条 1.07s
+[❌ 疑似幻觉]
+  结论：2 个已完成的独立学术数据源均未找到可信标题匹配
+
+[10/32] li2025self_guided  | 已用 10.56s  | 平均每条 1.06s
+[❌ 疑似幻觉]
+  结论：2 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+
+[11/32] liu2023bridging  | 已用 11.53s  | 平均每条 1.05s
+[❌ 疑似幻觉]
+  结论：标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+  差异：
+    • 标题：Bib='Bridging the Gap Between Supervised Fine-Tuning and Reinforcement Learning'；检索='Testing a stochastic acceleration model of pulsar wind nebulae: Early evolution of a wind nebula associated with SN 1986J'
+    • 作者新增：Shuta J. Tanaka（检索第1位）；Kazumi Kashiyama（检索第2位）
+    • 作者删除：Hao Liu（Bib第1位）；Zixuan Ji（Bib第2位）；Di Lu（Bib第3位）
+  来源：arxiv · https://arxiv.org/abs/2308.08809v1
+
+[12/32] liu2024dft  | 已用 12.50s  | 平均每条 1.04s
+[❌ 疑似幻觉]
+  结论：标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+  差异：
+    • 标题：Bib='Direct Fine-Tuning on Rewarded Trajectories for Language Model Alignment'；检索='Optimal constants in concentration inequalities on the sphere and in the Gauss space'
+    • 作者新增：Guillaume Aubrun（检索第1位）；Justin Jenkinson（检索第2位）；Stanislaw J. Szarek（检索第3位）
+    • 作者删除：Jason Liu（Bib第1位）；Zhiyuan Chen（Bib第2位）；Ji-Woo Park（Bib第3位）
+  来源：arxiv · https://arxiv.org/abs/2406.13581v1
+
+[13/32] liu2025principled  | 已用 15.46s  | 平均每条 1.19s
+[❌ 疑似幻觉]
+  结论：1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+
+[14/32] marino2019fine  | 已用 18.42s  | 平均每条 1.32s
+[❌ 疑似幻觉]
+  结论：2 个已完成的独立学术数据源均未找到可信标题匹配
+
+[15/32] mitchell2024leveraging  | 已用 21.38s  | 平均每条 1.43s
+[❌ 疑似幻觉]
+  结论：1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+
+[16/32] park2025reward_reweighted  | 已用 24.34s  | 平均每条 1.52s
+[❌ 疑似幻觉]
+  结论：标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+  差异：
+    • 标题：Bib='Reward-Reweighted SFT: An Offline Policy Refinement Method'；检索='Noncontextual ontological models of operational probabilistic theories'
+    • 作者新增：Sina Soltani（检索第1位）；Marco Erba（检索第2位）；David Schmid（检索第3位）；John H. Selby（检索第4位）
+    • 作者删除：Ji-Woo Park（Bib第1位）；Yifan Chen（Bib第2位）；Denny Zhou（Bib第3位）
+  来源：arxiv · https://arxiv.org/abs/2502.11842v1
+
+[17/32] rafailov2023dpo  | 已用 25.10s  | 平均每条 1.48s
+[⚠️ 信息需核对]
+  结论：标识符和标题对应真实论文，但存在字段差异
+  差异：
+    • 作者顺序：Chelsea Finn（Bib第5位→检索第6位）；Christopher D. Manning（Bib第6位→检索第5位）
+  来源：arxiv · https://arxiv.org/abs/2305.18290v1
+
+[18/32] rajani2025scalpel  | 已用 25.86s  | 平均每条 1.44s
+[⚠️ 信息需核对]
+  结论：标识符和标题对应真实论文，但存在字段差异
+  差异：
+    • 作者新增：Aryo Pradipta Gema（检索第2位）；Seraphina Goldfarb-Tarrant（检索第3位）
+    • 作者删除：Aryo Pradipta（Bib第2位）；Gema Seraphina Goldfarb-Tarrant（Bib第3位）
+  来源：arxiv · https://arxiv.org/abs/2507.10616v1
+
+[19/32] rein2024gpqa  | 已用 26.62s  | 平均每条 1.40s
+[✅ 通过]
+  结论：标题、作者、年份和可用出版信息均一致
+
+[20/32] schatzmann2007evaluating  | 已用 27.38s  | 平均每条 1.37s
+[❓ 无法确认]
+  结论：检索结果不足以确认或否定该引用
+  差异：
+    • 标题：Bib='Evaluating agenda-based user simulation for reinforcement learning of dialogue management'；检索='A survey of statistical user simulation techniques for reinforcement-learning of dialogue management strategies'
+    • 作者新增：KARL WEILHAMMER（检索第2位）；MATT STUTTLE（检索第3位）；STEVE YOUNG（检索第4位）
+    • 作者删除：Daniel Jurafsky（Bib第2位）；Michael Galley（Bib第3位）；David Trevillian（Bib第4位）
+    • 年份：Bib=2007；检索=2006
+
+[21/32] schulman2015trust  | 已用 28.78s  | 平均每条 1.37s
+[✅ 通过]
+  结论：标题、作者、年份和可用出版信息均一致
+
+[22/32] singh2023beyond  | 已用 30.18s  | 平均每条 1.37s
+[❌ 疑似幻觉]
+  结论：1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+
+[23/32] stiennon2020learning  | 已用 31.58s  | 平均每条 1.37s
+[⚠️ 信息需核对]
+  结论：找到可信论文，但存在字段差异
+  差异：
+    • 作者新增：Chelsea Voss（检索第6位）；Alec Radford（检索第7位）；Dario Amodei（检索第8位）；Paul F Christiano（检索第9位）
+    • 作者删除：Christopher Hesse（Bib第6位）；John Schulman（Bib第7位）；Jacob Hilton（Bib第8位）
+  来源：neurips · https://papers.nips.cc/paper_files/paper/2020/hash/1f89885d556929e98d3ef9b86448f951-Abstract.html
+
+[24/32] touvron2024context  | 已用 32.98s  | 平均每条 1.37s
+[❌ 疑似幻觉]
+  结论：1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+
+[25/32] wang2025gramr2  | 已用 33.93s  | 平均每条 1.36s
+[✅ 通过]
+  结论：标识符、标题和作者对应真实论文
+
+[26/32] wei2021finetuned  | 已用 34.88s  | 平均每条 1.34s
+[⚠️ 信息需核对]
+  结论：标识符和标题对应真实论文，但存在字段差异
+  差异：
+    • 作者新增：Kelvin Guu（检索第4位）；Adams Wei Yu（检索第5位）；Brian Lester（检索第6位）；Nan Du（检索第7位）；Andrew M. Dai（检索第8位）
+    • 作者删除：Kelvin Gu（Bib第4位）；Aitor Lewkowycz（Bib第5位）；Yao Lu（Bib第6位）；Ambrose Slone（Bib第7位）；Barret Zoph（Bib第9位）
+  来源：arxiv · https://arxiv.org/abs/2109.01652v1
+
+[27/32] wu2024alternating  | 已用 35.83s  | 平均每条 1.33s
+[❌ 疑似幻觉]
+  结论：标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+  差异：
+    • 标题：Bib='Alternating between On-Policy and Off-Policy Updates for Efficient and Stable LLM Alignment'；检索='Unambiguous fluctuation decomposition of the self-energy: pseudogap physics beyond spin fluctuations'
+    • 作者新增：Yang Yu（检索第1位）；Sergei Iskakov（检索第2位）；Emanuel Gull（检索第3位）；Karsten Held（检索第4位）；Friedrich Krien（检索第5位）
+    • 作者删除：Jeff Wu（Bib第1位）；Long Ouyang（Bib第2位）；Nisan Stiennon（Bib第3位）
+  来源：arxiv · https://arxiv.org/abs/2401.08543v1
+
+[28/32] yue2025does  | 已用 36.78s  | 平均每条 1.31s
+[⚠️ 信息需核对]
+  结论：标识符和标题对应真实论文，但存在字段差异
+  差异：
+    • 作者新增：Yang Yue（检索第6位）
+  来源：arxiv · https://arxiv.org/abs/2504.13837v1
+
+[29/32] zhang2020spectral  | 已用 38.31s  | 平均每条 1.32s
+[❓ 无法确认]
+  结论：检索结果不足以确认或否定该引用
+
+[30/32] zhao2023reward  | 已用 39.84s  | 平均每条 1.33s
+[❌ 疑似幻觉]
+  结论：标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+  差异：
+    • 标题：Bib='Reward Model Fine-Tuning using Relative Gradient Updates'；检索='Near-Field Aeroacoustic Shape Optimization at Low Reynolds Numbers'
+    • 作者新增：Mohsen Hamedi（检索第1位）；Brian Vermeire（检索第2位）
+    • 作者删除：Weizhe Zhao（Bib第1位）；Benjamin Packer（Bib第2位）；Ilya Kostrikov（Bib第3位）
+  来源：arxiv · https://arxiv.org/abs/2310.10574v1
+
+[31/32] zhou2023prefix  | 已用 41.37s  | 平均每条 1.33s
+[❌ 疑似幻觉]
+  结论：1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+
+[32/32] zhu2023survey  | 已用 42.90s  | 平均每条 1.34s
+[❌ 疑似幻觉]
+  结论：标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+  差异：
+    • 标题：Bib='A survey on efficient deployment of large language models'；检索='Comparing Traditional and LLM-based Search for Consumer Choice: A Randomized Experiment'
+    • 大部分作者无法对应
+  来源：arxiv · https://arxiv.org/abs/2307.03744v1
+
+检查完成：共 32 条  ❌ 疑似幻觉 19  ⚠️ 信息需核对 7  ❓ 无法确认 3  ✅ 通过 3
+
+最终汇总：
+❌ 疑似幻觉（19）
+  1. 标题：Evaluating GPT-4 for multiple-choice question generation in programming education
+     作者：Doughty, Matthew；Wan, Hao
+     原因：
+       - 标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+       - 标题：Bib='Evaluating GPT-4 for multiple-choice question generation in programming education'；检索='Tell me, what are you most afraid of? Exploring the Effects of Agent Representation on Information Disclosure in Human-Chatbot Interaction'
+       - authors: 新增 Anna Stock（检索第1位）；Stephan Schlögl（检索第2位）；Aleksander Groth（检索第3位） 删除 Matthew Doughty（Bib第1位）；Hao Wan（Bib第2位）
+  2. 标题：Llama 3: Advancements in open-source language models
+     作者：Abhinav Dubey et al
+     原因：
+       - 3 个已完成的独立学术数据源均未找到可信标题匹配
+  3. 标题：A benchmark for compositional text-to-image synthesis
+     作者：Goyal, Yash；Mohapatra, Anamay；Kwatra, Nihar；Goyal, Pawan
+     原因：
+       - 1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  4. 标题：Measuring Massive Multitask Language Understanding
+     作者：Hendrycks, Dan；Burns, Collin；Basart, Steven；Critch, Andy；Li, Jerry；Ippolito, Dawn；Lapedriza, Aina；Tramer, Florian；Macfarlane, Rylan；Jiang, Eric；others
+     原因：
+       - 1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  5. 标题：Dynamic Policy Fusion for Mixed-Signal LLM Alignment
+     作者：Kim, Min-Joon；Singh, Aviral；Lee, Hong-Seok
+     原因：
+       - 1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  6. 标题：Numinamath: The largest public dataset in ai4maths with 860k pairs of competition math problems and solutions
+     作者：Li, Jia；Beeching, Edward；Tunstall, Lewis；Lipkin, Ben；Soletskyi, Roman；Huang, Shengyi；Rasul, Kashif；Yu, Longhui；Jiang, Albert Q；Shen, Ziju；others
+     原因：
+       - 2 个已完成的独立学术数据源均未找到可信标题匹配
+  7. 标题：Self-Guided Exploration with Offline Demonstrations for Complex Reasoning
+     作者：Li, Jia；Wang, Zhaofeng；He, Junxian
+     原因：
+       - 2 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  8. 标题：Bridging the Gap Between Supervised Fine-Tuning and Reinforcement Learning
+     作者：Liu, Hao；Ji, Zixuan；Lu, Di
+     原因：
+       - 标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+       - 标题：Bib='Bridging the Gap Between Supervised Fine-Tuning and Reinforcement Learning'；检索='Testing a stochastic acceleration model of pulsar wind nebulae: Early evolution of a wind nebula associated with SN 1986J'
+       - authors: 新增 Shuta J. Tanaka（检索第1位）；Kazumi Kashiyama（检索第2位） 删除 Hao Liu（Bib第1位）；Zixuan Ji（Bib第2位）；Di Lu（Bib第3位）
+  9. 标题：Direct Fine-Tuning on Rewarded Trajectories for Language Model Alignment
+     作者：Liu, Jason；Chen, Zhiyuan；Park, Ji-Woo
+     原因：
+       - 标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+       - 标题：Bib='Direct Fine-Tuning on Rewarded Trajectories for Language Model Alignment'；检索='Optimal constants in concentration inequalities on the sphere and in the Gauss space'
+       - authors: 新增 Guillaume Aubrun（检索第1位）；Justin Jenkinson（检索第2位）；Stanislaw J. Szarek（检索第3位） 删除 Jason Liu（Bib第1位）；Zhiyuan Chen（Bib第2位）；Ji-Woo Park（Bib第3位）
+  10. 标题：A Principled Analysis of Offline Preference Optimization Algorithms
+     作者：Liu, Zihan；Agarwal, Alekh；Jiang, Nan
+     原因：
+       - 1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  11. 标题：Fine-Grained Image Classification with Learnable Semantic Parts
+     作者：Marino, K.；Salakhutdinov, R.；Gupta, A.
+     原因：
+       - 2 个已完成的独立学术数据源均未找到可信标题匹配
+  12. 标题：Leveraging Offline Datasets for Efficient Online RL in Large Language Models
+     作者：Mitchell, Eric；Levine, Sergey；Finn, Chelsea
+     原因：
+       - 1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  13. 标题：Reward-Reweighted SFT: An Offline Policy Refinement Method
+     作者：Park, Ji-Woo；Chen, Yifan；Zhou, Denny
+     原因：
+       - 标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+       - 标题：Bib='Reward-Reweighted SFT: An Offline Policy Refinement Method'；检索='Noncontextual ontological models of operational probabilistic theories'
+       - authors: 新增 Sina Soltani（检索第1位）；Marco Erba（检索第2位）；David Schmid（检索第3位）；John H. Selby（检索第4位） 删除 Ji-Woo Park（Bib第1位）；Yifan Chen（Bib第2位）；Denny Zhou（Bib第3位）
+  14. 标题：Beyond Reward: Offline Preference-guided Policy Learning
+     作者：Singh, Aviral；Hong, Joey；Kumar, Aviral
+     原因：
+       - 1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  15. 标题：Context Distillation for On-Policy Reinforcement Learning in LLMs
+     作者：Touvron, Hugo；Martin, Louis；Lample, Guillaume
+     原因：
+       - 1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  16. 标题：Alternating between On-Policy and Off-Policy Updates for Efficient and Stable LLM Alignment
+     作者：Wu, Jeff；Ouyang, Long；Stiennon, Nisan
+     原因：
+       - 标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+       - 标题：Bib='Alternating between On-Policy and Off-Policy Updates for Efficient and Stable LLM Alignment'；检索='Unambiguous fluctuation decomposition of the self-energy: pseudogap physics beyond spin fluctuations'
+       - authors: 新增 Yang Yu（检索第1位）；Sergei Iskakov（检索第2位）；Emanuel Gull（检索第3位）；Karsten Held（检索第4位）；Friedrich Krien（检索第5位） 删除 Jeff Wu（Bib第1位）；Long Ouyang（Bib第2位）；Nisan Stiennon（Bib第3位）
+  17. 标题：Reward Model Fine-Tuning using Relative Gradient Updates
+     作者：Zhao, Weizhe；Packer, Benjamin；Kostrikov, Ilya
+     原因：
+       - 标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+       - 标题：Bib='Reward Model Fine-Tuning using Relative Gradient Updates'；检索='Near-Field Aeroacoustic Shape Optimization at Low Reynolds Numbers'
+       - authors: 新增 Mohsen Hamedi（检索第1位）；Brian Vermeire（检索第2位） 删除 Weizhe Zhao（Bib第1位）；Benjamin Packer（Bib第2位）；Ilya Kostrikov（Bib第3位）
+  18. 标题：Prefix-Tuning for Guided Text Generation in Reinforcement Learning
+     作者：Zhou, Chunting；Neubig, Graham；He, Junxian
+     原因：
+       - 1 个对应会议/期刊的官方数据源在官方检索范围内未找到可信标题匹配
+  19. 标题：A survey on efficient deployment of large language models
+     作者：Zhu, Chen；others
+     原因：
+       - 标识符指向的论文与 Bib 的标题明显不一致，且标题/作者检索未找到目标
+       - 标题：Bib='A survey on efficient deployment of large language models'；检索='Comparing Traditional and LLM-based Search for Consumer Choice: A Randomized Experiment'
+       - authors: 作者列表存在差异
+⚠️ 信息需核对（7）
+  1. 标题：Raft: Reward ranked finetuning for aligning language models with human feedback
+     作者：Dong, Hanze；Xiong, Wei；Goyal, Deep；Pan, Rui；Diao, Shizhe；Zhang, Jipeng；Shum, Kashun；Wang, Tong
+     原因：
+       - 标识符对应真实论文，但标题可能是不同版本的写法
+       - 标题：Bib='Raft: Reward ranked finetuning for aligning language models with human feedback'；检索='RAFT: Reward rAnked FineTuning for Generative Foundation Model Alignment'
+       - authors: 新增 Tong Zhang（检索第8位） 删除 Tong Wang（Bib第8位）
+  2. 标题：Kahneman-Tversky Optimization (KTO): A New Way to Align Language Models
+     作者：Ethayarajh, Kawin；Gao, Lawrence；Jurafsky, Dan
+     原因：
+       - 标识符对应真实论文，但标题可能是不同版本的写法
+       - 标题：Bib='Kahneman-Tversky Optimization (KTO): A New Way to Align Language Models'；检索='KTO: Model Alignment as Prospect Theoretic Optimization'
+       - authors: 新增 Winnie Xu（检索第2位）；Niklas Muennighoff（检索第3位）；Douwe Kiela（检索第5位） 删除 Lawrence Gao（Bib第2位）
+  3. 标题：Direct Preference Optimization: Your Language Model is Secretly a Reward Model
+     作者：Rafailov, Rafael；Sharma, Archit；Mitchell, Eric；Ermon, Stefano；Finn, Chelsea；Manning, Christopher D.
+     原因：
+       - 标识符和标题对应真实论文，但存在字段差异
+       - authors: 顺序调整 Chelsea Finn（Bib第5位→检索第6位）；Christopher D. Manning（Bib第6位→检索第5位）
+  4. 标题：Scalpel vs. Hammer: {GRPO} Amplifies Existing Capabilities, {SFT} Replaces Them
+     作者：Neel Rajani；Aryo Pradipta；Gema Seraphina Goldfarb-Tarrant；Ivan Titov
+     原因：
+       - 标识符和标题对应真实论文，但存在字段差异
+       - authors: 新增 Aryo Pradipta Gema（检索第2位）；Seraphina Goldfarb-Tarrant（检索第3位） 删除 Aryo Pradipta（Bib第2位）；Gema Seraphina Goldfarb-Tarrant（Bib第3位）
+  5. 标题：Learning to summarize from human feedback
+     作者：Stiennon, Nisan；Ouyang, Long；Wu, Jeff；Ziegler, Daniel M；Lowe, Ryan；Hesse, Christopher；Schulman, John；Hilton, Jacob
+     原因：
+       - 找到可信论文，但存在字段差异
+       - authors: 新增 Chelsea Voss（检索第6位）；Alec Radford（检索第7位）；Dario Amodei（检索第8位）；Paul F Christiano（检索第9位） 删除 Christopher Hesse（Bib第6位）；John Schulman（Bib第7位）；Jacob Hilton（Bib第8位）
+  6. 标题：Finetuned language models are zero-shot learners
+     作者：Wei, Jason；Bosma, Maarten；Zhao, Vincent Y；Gu, Kelvin；Lewkowycz, Aitor；Lu, Yao；Slone, Ambrose；Le, Quoc；Zoph, Barret
+     原因：
+       - 标识符和标题对应真实论文，但存在字段差异
+       - authors: 新增 Kelvin Guu（检索第4位）；Adams Wei Yu（检索第5位）；Brian Lester（检索第6位）；Nan Du（检索第7位）；Andrew M. Dai（检索第8位） 删除 Kelvin Gu（Bib第4位）；Aitor Lewkowycz（Bib第5位）；Yao Lu（Bib第6位）；Ambrose Slone（Bib第7位）；Barret Zoph（Bib第9位）
+  7. 标题：Does reinforcement learning really incentivize reasoning capacity in llms beyond the base model?
+     作者：Yue, Yang；Chen, Zhiqi；Lu, Rui；Zhao, Andrew；Wang, Zhaokai；Song, Shiji；Huang, Gao
+     原因：
+       - 标识符和标题对应真实论文，但存在字段差异
+       - authors: 新增 Yang Yue（检索第6位）
+❓ 无法确认（3）
+  1. 标题：ICU Length-of-Stay Prediction with Interaction-based Explanations
+     作者：Bardhan, Ishita et al.
+     原因：
+       - 检索结果不足以确认或否定该引用
+       - 没有获得标题和作者同时可靠匹配的记录
+  2. 标题：Evaluating agenda-based user simulation for reinforcement learning of dialogue management
+     作者：Jost Schatzmann；Daniel Jurafsky；Michael Galley；David Trevillian
+     原因：
+       - 检索结果不足以确认或否定该引用
+       - 没有获得标题和作者同时可靠匹配的记录
+  3. 标题：Defense against adversarial attacks using spectral regularization
+     作者：Dinghuai Zhang；Yang Song；Inderjit Dhillon；Eric Xing
+     原因：
+       - 检索结果不足以确认或否定该引用
+       - 没有获得标题和作者同时可靠匹配的记录
+✅ 通过（3，仅统计数量）
+
+日志文件：examples/example_ref.log
+问题引用文件：examples/example_ref_issues.json

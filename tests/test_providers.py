@@ -17,6 +17,7 @@ from bibchecker.providers import (
     JMLRProvider,
     NeurIPSProceedingsProvider,
     OpenReviewProvider,
+    SemanticScholarProvider,
     default_providers,
 )
 
@@ -175,6 +176,96 @@ def test_crossref_title_search_uses_first_author():
     provider = StubCrossref()
     provider.search_title(entry)
     assert "query.author=Smith" in provider.url
+
+
+class StubSemanticScholar(SemanticScholarProvider):
+    def _json(self, url):
+        self.urls = getattr(self, "urls", [])
+        self.urls.append(url)
+        paper = {
+            "paperId": "s2-paper-id",
+            "title": "A Real Paper",
+            "authors": [{"name": "Alice Smith"}, {"name": "Bob Jones"}],
+            "year": 2024,
+            "venue": "ICLR",
+            "publicationVenue": {"name": "International Conference on Learning Representations"},
+            "externalIds": {
+                "DOI": "10.1000/example",
+                "ArXiv": "2401.12345",
+            },
+            "url": "https://www.semanticscholar.org/paper/s2-paper-id",
+        }
+        if "/search/match?" in url:
+            return {"data": [paper]}
+        return paper
+
+
+def test_semantic_scholar_identifier_lookup_uses_doi_and_arxiv():
+    entry = BibEntry(
+        "paper",
+        "article",
+        {
+            "title": "A Real Paper",
+            "doi": "10.1000/example",
+            "eprint": "2401.12345",
+        },
+    )
+    provider = StubSemanticScholar()
+    candidates = provider.lookup_identifier(entry)
+
+    assert len(candidates) == 2
+    assert "/paper/DOI:10.1000%2Fexample?" in provider.urls[0]
+    assert "/paper/ARXIV:2401.12345?" in provider.urls[1]
+    assert candidates[0].title == "A Real Paper"
+    assert candidates[0].authors == ["Alice Smith", "Bob Jones"]
+    assert candidates[0].identifier == "10.1000/example"
+
+
+def test_semantic_scholar_title_search_uses_match_endpoint():
+    entry = BibEntry("paper", "article", {"title": "A Real Paper"})
+    provider = StubSemanticScholar()
+    candidate = provider.search_title(entry)[0]
+
+    assert "/paper/search/match?" in provider.urls[0]
+    assert "query=A+Real+Paper" in provider.urls[0]
+    assert candidate.source == "semanticscholar"
+    assert candidate.venue == "ICLR"
+
+
+def test_semantic_scholar_api_key_uses_s2_header():
+    headers = SemanticScholarProvider(token="secret")._headers(
+        "application/json",
+        "Paper-BibChecker/0.1",
+    )
+
+    assert headers["x-api-key"] == "secret"
+    assert "Authorization" not in headers
+
+
+def test_semantic_scholar_accepts_s2_api_key_alias(monkeypatch):
+    monkeypatch.delenv("SEMANTIC_SCHOLAR_API_KEY", raising=False)
+    monkeypatch.setenv("S2_API_KEY", "alias-secret")
+
+    provider = SemanticScholarProvider()
+
+    assert provider.token == "alias-secret"
+
+
+def test_default_providers_skip_semantic_scholar_without_key(monkeypatch):
+    monkeypatch.delenv("SEMANTIC_SCHOLAR_API_KEY", raising=False)
+    monkeypatch.delenv("S2_API_KEY", raising=False)
+
+    names = [provider.name for provider in default_providers()]
+
+    assert "semanticscholar" not in names
+
+
+def test_default_providers_include_semantic_scholar_with_key(monkeypatch):
+    monkeypatch.setenv("SEMANTIC_SCHOLAR_API_KEY", "secret")
+
+    names = [provider.name for provider in default_providers()]
+
+    assert "semanticscholar" in names
 
 
 class StubOpenReview(OpenReviewProvider):

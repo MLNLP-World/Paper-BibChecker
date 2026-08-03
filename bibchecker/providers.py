@@ -89,15 +89,7 @@ class _HTTPProvider(Provider):
             user_agent = "Paper-BibChecker/0.1"
             if self.email:
                 user_agent += f" (mailto:{self.email})"
-            headers = {
-                "Accept": accept,
-                "Accept-Encoding": "gzip",
-                "User-Agent": user_agent,
-            }
-            if self.email:
-                headers["From"] = self.email
-            if self.token:
-                headers["Authorization"] = f"Bearer {self.token}"
+            headers = self._headers(accept, user_agent)
             request = Request(url, headers=headers)
             with urlopen(request, timeout=self.timeout) as response:
                 body = response.read()
@@ -109,6 +101,18 @@ class _HTTPProvider(Provider):
 
     def _json(self, url: str) -> Mapping[str, Any]:
         return json.loads(self._get(url).decode("utf-8"))
+
+    def _headers(self, accept: str, user_agent: str) -> dict[str, str]:
+        headers = {
+            "Accept": accept,
+            "Accept-Encoding": "gzip",
+            "User-Agent": user_agent,
+        }
+        if self.email:
+            headers["From"] = self.email
+        if self.token:
+            headers["Authorization"] = f"Bearer {self.token}"
+        return headers
 
 
 class DirectURLProvider(_HTTPProvider):
@@ -559,6 +563,95 @@ class CrossrefProvider(_HTTPProvider):
                 )
             )
         return candidates
+
+
+class SemanticScholarProvider(_HTTPProvider):
+    """使用 Semantic Scholar Academic Graph API 查询论文元数据。"""
+
+    name = "semanticscholar"
+    identifier_lookup = True
+    endpoint = "https://api.semanticscholar.org/graph/v1/paper"
+    fields = "title,authors,year,venue,publicationVenue,externalIds,url"
+
+    def __init__(self, **kwargs: Any) -> None:
+        kwargs.setdefault(
+            "token",
+            os.environ.get("SEMANTIC_SCHOLAR_API_KEY")
+            or os.environ.get("S2_API_KEY"),
+        )
+        super().__init__(**kwargs)
+
+    def _headers(self, accept: str, user_agent: str) -> dict[str, str]:
+        headers = super()._headers(accept, user_agent)
+        token = headers.pop("Authorization", "")
+        if token.startswith("Bearer "):
+            headers["x-api-key"] = token.removeprefix("Bearer ")
+        return headers
+
+    def lookup_identifier(self, entry: Any) -> list[Candidate] | None:
+        identifiers: list[str] = []
+        if doi := _entry_doi(entry):
+            identifiers.append(f"DOI:{_normalize_doi(doi)}")
+        if arxiv_id := _entry_arxiv(entry):
+            identifiers.append(f"ARXIV:{_normalize_arxiv(arxiv_id)}")
+        if not identifiers:
+            return None
+
+        candidates: list[Candidate] = []
+        for identifier in identifiers:
+            try:
+                record = self._json(
+                    f"{self.endpoint}/{quote(identifier, safe=':')}?"
+                    f"{urlencode({'fields': self.fields})}"
+                )
+            except HTTPError as error:
+                if error.code == 404:
+                    continue
+                raise
+            candidates.append(self._candidate(record))
+        return candidates
+
+    def search_title(self, entry: Any) -> list[Candidate]:
+        title = _entry_title(entry)
+        if not title:
+            return []
+        payload = self._json(
+            f"{self.endpoint}/search/match?"
+            f"{urlencode({'query': title, 'fields': self.fields})}"
+        )
+        records = payload.get("data") or []
+        if isinstance(records, Mapping):
+            records = [records]
+        return _sort_title_candidates(
+            title,
+            [self._candidate(record) for record in records],
+        )[: self.max_results]
+
+    def _candidate(self, item: Mapping[str, Any]) -> Candidate:
+        external_ids = item.get("externalIds") or {}
+        publication_venue = item.get("publicationVenue") or {}
+        authors = [
+            str(author.get("name") or "").strip()
+            for author in item.get("authors") or []
+            if author.get("name")
+        ]
+        doi = _extract_doi(external_ids.get("DOI"))
+        arxiv_id = _extract_arxiv(external_ids.get("ArXiv"))
+        venue = str(
+            item.get("venue")
+            or publication_venue.get("name")
+            or ""
+        )
+        return Candidate(
+            source=self.name,
+            title=str(item.get("title") or ""),
+            authors=authors,
+            year=_year(item.get("year")),
+            venue=venue,
+            url=str(item.get("url") or ""),
+            identifier=doi or arxiv_id or str(item.get("paperId") or ""),
+            raw=dict(item),
+        )
 
 
 class DBLPProvider(_HTTPProvider):
@@ -1324,7 +1417,7 @@ def default_providers(
     max_results: int = 5,
     email: str | None = None,
 ) -> list[Provider]:
-    return [
+    providers: list[Provider] = [
         DirectURLProvider(timeout=timeout, max_results=max_results),
         ArxivProvider(timeout=timeout, max_results=max_results),
         DataCiteProvider(timeout=timeout, max_results=max_results),
@@ -1344,6 +1437,12 @@ def default_providers(
         OpenReviewProvider(timeout=timeout, max_results=max_results),
         GitHubProvider(timeout=timeout, max_results=max_results),
     ]
+    if os.environ.get("SEMANTIC_SCHOLAR_API_KEY") or os.environ.get("S2_API_KEY"):
+        providers.insert(
+            5,
+            SemanticScholarProvider(timeout=timeout, max_results=max_results),
+        )
+    return providers
 
 
 def get_default_providers(**kwargs: Any) -> list[Provider]:

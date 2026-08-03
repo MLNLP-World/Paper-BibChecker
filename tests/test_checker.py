@@ -92,6 +92,109 @@ def test_identifier_conflict_can_offer_title_search_candidate():
     assert result.field_comparison["title"]["status"] == "mismatch"
 
 
+def test_doi_lookup_falls_back_to_semantic_scholar_after_openalex_miss():
+    entry = BibEntry(
+        "paper",
+        "article",
+        {
+            "title": "A Real Paper",
+            "author": "Alice Smith",
+            "year": "2024",
+            "doi": "10.1000/example",
+        },
+    )
+    calls = []
+
+    class EmptyIdentifierProvider:
+        identifier_lookup = True
+
+        def __init__(self, name):
+            self.name = name
+
+        def lookup_identifier(self, item):
+            calls.append(self.name)
+            return []
+
+    class SemanticScholarProvider:
+        name = "semanticscholar"
+        identifier_lookup = True
+
+        def lookup_identifier(self, item):
+            calls.append(self.name)
+            return [
+                Candidate(
+                    "semanticscholar",
+                    "A Real Paper",
+                    ["Alice Smith"],
+                    2024,
+                    identifier="10.1000/example",
+                )
+            ]
+
+    result = check_entry(
+        entry,
+        [
+            EmptyIdentifierProvider("crossref"),
+            EmptyIdentifierProvider("openalex"),
+            SemanticScholarProvider(),
+        ],
+    )
+
+    assert result.status == VALIDATED
+    assert calls == ["crossref", "openalex", "semanticscholar"]
+
+
+def test_arxiv_lookup_tries_semantic_scholar_after_nondecisive_arxiv():
+    entry = BibEntry(
+        "paper",
+        "article",
+        {
+            "title": "A Real Paper",
+            "author": "Alice Smith",
+            "year": "2024",
+            "eprint": "2401.12345",
+        },
+    )
+    calls = []
+
+    class ArxivProvider:
+        name = "arxiv"
+        identifier_lookup = True
+
+        def lookup_identifier(self, item):
+            calls.append(self.name)
+            return [
+                Candidate(
+                    "arxiv",
+                    "A Different Paper",
+                    ["Someone Else"],
+                    2024,
+                    identifier="2401.12345",
+                )
+            ]
+
+    class SemanticScholarProvider:
+        name = "semanticscholar"
+        identifier_lookup = True
+
+        def lookup_identifier(self, item):
+            calls.append(self.name)
+            return [
+                Candidate(
+                    "semanticscholar",
+                    "A Real Paper",
+                    ["Alice Smith"],
+                    2024,
+                    identifier="2401.12345",
+                )
+            ]
+
+    result = check_entry(entry, [ArxivProvider(), SemanticScholarProvider()])
+
+    assert result.status == VALIDATED
+    assert calls == ["arxiv", "semanticscholar"]
+
+
 def test_year_difference_needs_review_and_prints_both_values():
     entry = BibEntry(
         "year",

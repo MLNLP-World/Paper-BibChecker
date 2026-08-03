@@ -230,6 +230,8 @@ Paper-BibChecker 会对 BibTeX 中的以下信息进行交叉核验：
   <a href="https://github.com/RyanLiu112"><img src="https://images.weserv.nl/?url=github.com/RyanLiu112.png?v=4&mask=circle" width="80" alt="RyanLiu112"></a>
    &nbsp;
   <a href="https://github.com/Lee1003-lee"><img src="https://images.weserv.nl/?url=github.com/Lee1003-lee.png?v=4&mask=circle" width="80" alt="Lee1003-lee"></a>
+   &nbsp;
+  <a href="https://github.com/ling-pan"><img src="https://images.weserv.nl/?url=github.com/ling-pan.png?v=4&mask=circle" width="80" alt="ling-pan"></a>
   &nbsp;&nbsp;
   <a href="https://github.com/qinlibo-hit"><img src="https://images.weserv.nl/?url=github.com/qinlibo-hit.png?v=4&mask=circle" width="80" alt="qinlibo-hit"></a>
 </p>

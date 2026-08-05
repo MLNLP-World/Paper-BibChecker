@@ -256,10 +256,12 @@ Paper-BibChecker 会对 BibTeX 中的以下信息进行交叉核验：
    &nbsp;
   <a href="https://github.com/Lee1003-lee"><img src="https://images.weserv.nl/?url=github.com/Lee1003-lee.png?v=4&mask=circle" width="80" alt="Lee1003-lee"></a>
    &nbsp;
+  <a href="https://github.com/GoatCsu"><img src="https://images.weserv.nl/?url=github.com/GoatCsu.png?v=4&mask=circle" width="80" alt="GoatCsu"></a>
+   &nbsp;
   <a href="https://github.com/ling-pan"><img src="https://images.weserv.nl/?url=github.com/ling-pan.png?v=4&mask=circle" width="80" alt="ling-pan"></a>
-  &nbsp;&nbsp;
+   &nbsp;
   <a href="https://github.com/qinlibo-hit"><img src="https://images.weserv.nl/?url=github.com/qinlibo-hit.png?v=4&mask=circle" width="80" alt="qinlibo-hit"></a>
-    <a href="https://github.com/GoatCsu"><img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/183998412?v=4&mask=circle" width="80" alt="gaote"></a>
+    
   
 </p>
 

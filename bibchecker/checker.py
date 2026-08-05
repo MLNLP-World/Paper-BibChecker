@@ -238,12 +238,18 @@ def check_entry(
             run_identifiers(_named_providers(applicable, {"datacite"}))
             if decisive():
                 return finish()
+        run_identifiers(_named_providers(applicable, {"semanticscholar"}))
+        if decisive():
+            return finish()
 
     if plan.has_doi:
         run_identifiers(_named_providers(applicable, {"crossref"}))
         if decisive():
             return finish()
         run_identifiers(_named_providers(applicable, {"openalex"}))
+        if decisive():
+            return finish()
+        run_identifiers(_named_providers(applicable, {"semanticscholar"}))
         if decisive():
             return finish()
 
@@ -255,6 +261,7 @@ def check_entry(
             "datacite",
             "crossref",
             "openalex",
+            "semanticscholar",
         }
         run_identifiers(
             [

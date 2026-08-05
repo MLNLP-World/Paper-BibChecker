@@ -5,6 +5,7 @@
   <img alt="status" src="https://img.shields.io/badge/status-building-success?style=for-the-badge&color=16A34A" />
   <img alt="PRs" src="https://img.shields.io/badge/PRs-welcome-orange?style=for-the-badge&color=F97316" />
   <img alt="stars" src="https://img.shields.io/github/stars/RyanLiu112/Paper-BibChecker?style=for-the-badge&color=FBBF24" />
+  
 </p>
 
 <p align="center">
@@ -41,7 +42,31 @@ cd Paper-BibChecker
 python -m pip install -e .
 ```
 
-### 2. 使用
+### 2. 可选配置
+
+工具可以直接运行；如果需要启用 Semantic Scholar，或更稳定地访问 OpenAlex、Crossref、GitHub，可复制示例环境变量文件并填入本地凭据：
+
+```bash
+cp .env.example .env
+```
+
+常用配置：
+
+```bash
+# Semantic Scholar Academic Graph API key；未配置时默认不启用 S2 数据源
+SEMANTIC_SCHOLAR_API_KEY=your_s2_api_key
+
+# 也支持 Semantic Scholar 常见别名
+S2_API_KEY=your_s2_api_key
+
+# OpenAlex/Crossref polite pool 联系邮箱
+OPENALEX_EMAIL=you@example.com
+CROSSREF_EMAIL=you@example.com
+```
+
+> `.env` 只用于本地运行，已在 `.gitignore` 中忽略；不要提交真实 API key。未配置 Semantic Scholar key 时，S2 数据源不会加入默认检查流程；配置 key 后如 S2 返回 403、429 或超时，会作为该数据源错误记录在日志中，其他数据源仍会继续参与检查。
+
+### 3. 使用
 
 #### 方式一：只提供 `.bib` 文件
 
@@ -211,7 +236,7 @@ Paper-BibChecker 会对 BibTeX 中的以下信息进行交叉核验：
 1. 访问 Bib 中提供的论文页面、GitHub 或其他显式 URL；
 2. 精确解析 DOI 与 arXiv ID；
 3. 检索对应会议或期刊的官方论文集；
-4. 通过 arXiv、OpenAlex、Crossref、DBLP、OpenReview 等学术数据源交叉核验；
+4. 通过 arXiv、OpenAlex、Crossref、DBLP、OpenReview 以及可选的 Semantic Scholar 等学术数据源交叉核验；
 5. 综合比较标题、作者、年份、会议或期刊及标识符后给出保守判断。
 
 当前已覆盖 ICLR、NeurIPS、ICML、ACL、EMNLP、CVPR、ICCV、ECCV、COLM、TACL、JMLR 等常见会议和期刊的官方或专用来源。
@@ -234,6 +259,8 @@ Paper-BibChecker 会对 BibTeX 中的以下信息进行交叉核验：
   <a href="https://github.com/ling-pan"><img src="https://images.weserv.nl/?url=github.com/ling-pan.png?v=4&mask=circle" width="80" alt="ling-pan"></a>
   &nbsp;&nbsp;
   <a href="https://github.com/qinlibo-hit"><img src="https://images.weserv.nl/?url=github.com/qinlibo-hit.png?v=4&mask=circle" width="80" alt="qinlibo-hit"></a>
+    <a href="https://github.com/GoatCsu"><img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/183998412?v=4&mask=circle" width="80" alt="gaote"></a>
+  
 </p>
 
 ---

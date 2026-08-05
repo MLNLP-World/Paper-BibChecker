@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Paper-BibChecker · BibTeX 引用核验</title>
+<style>
+  :root {
+    --bg: #f6f8fc;
+    --bg-grad-1: #eef2ff;
+    --bg-grad-2: #f6f8fc;
+    --card: #ffffff;
+    --border: #e8edf5;
+    --border-strong: #d6deea;
+    --text: #1f2937;
+    --muted: #7382a0;
+    --brand: #4f6ef7;
+    --brand-dark: #3b55d9;
+    --brand-soft: #eef2ff;
+    --ok: #10b981;
+    --warn: #f59e0b;
+    --unknown: #94a3b8;
+    --bad: #ef4444;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 4px 24px rgba(31, 45, 80, 0.06);
+    --shadow-hover: 0 8px 32px rgba(31, 45, 80, 0.12);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+    color: var(--text);
+    line-height: 1.65;
+    background:
+      radial-gradient(1200px 600px at 50% -200px, var(--bg-grad-1), transparent),
+      var(--bg);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  /* header */
+  header { text-align: center; margin-bottom: 32px; }
+  header .logo { font-size: 40px; line-height: 1; margin-bottom: 12px; }
+  header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(120deg, var(--brand-dark), #7c93ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  header p.sub { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .disclaimer {
+    background: linear-gradient(135deg, #fffbeb, #fef9c3);
+    border: 1.5px solid #fde68a;
+    color: #92400e;
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    font-size: 13.5px;
+    line-height: 1.75;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    box-shadow: 0 2px 12px rgba(251, 191, 36, 0.12);
+  }
+  .disclaimer .ic { flex-shrink: 0; font-size: 18px; margin-top: 0; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+  }
+
+  /* drop zones */
+  .drop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  @media (max-width: 620px) { .drop-grid { grid-template-columns: 1fr; } }
+  .dropzone {
+    position: relative;
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius);
+    padding: 26px 18px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    background: #fcfdff;
+    min-height: 148px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .dropzone:hover { border-color: var(--brand); background: var(--brand-soft); }
+  .dropzone.dragover {
+    border-color: var(--brand);
+    background: var(--brand-soft);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+  .dropzone.filled { border-style: solid; border-color: var(--brand); background: var(--brand-soft); }
+  .dropzone .dz-icon { font-size: 30px; line-height: 1; opacity: 0.85; }
+  .dropzone .dz-title { font-weight: 700; font-size: 15px; }
+  .dropzone .dz-hint { font-size: 12.5px; color: var(--muted); }
+  .dropzone .dz-file {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--brand-dark);
+    max-width: 100%;
+  }
+  .dropzone .dz-file .name {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px;
+  }
+  .dropzone.filled .dz-default { display: none; }
+  .dropzone.filled .dz-file { display: flex; }
+  .dz-clear {
+    border: none; background: rgba(79,110,247,0.14); color: var(--brand-dark);
+    width: 20px; height: 20px; border-radius: 50%; cursor: pointer;
+    font-size: 13px; line-height: 1; padding: 0; flex-shrink: 0;
+  }
+  .dz-clear:hover { background: rgba(79,110,247,0.28); }
+  .req { color: var(--bad); }
+  .opt { color: var(--muted); font-weight: 500; font-size: 12px; }
+
+  /* options */
+  .options { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+  .field input[type="number"] {
+    width: 110px; padding: 9px 12px; border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm); font-size: 14px; background: #fff; transition: border 0.15s;
+  }
+  .field input[type="number"]:focus { outline: none; border-color: var(--brand); }
+  .switch { display: flex; align-items: center; gap: 9px; font-size: 14px; cursor: pointer; user-select: none; }
+  .switch input { position: absolute; opacity: 0; }
+  .switch .track {
+    width: 40px; height: 22px; border-radius: 999px; background: var(--border-strong);
+    position: relative; transition: background 0.18s;
+  }
+  .switch .track::after {
+    content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px;
+    border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2); transition: transform 0.18s;
+  }
+  .switch input:checked + .track { background: var(--brand); }
+  .switch input:checked + .track::after { transform: translateX(18px); }
+
+  .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 22px; }
+  button {
+    font-family: inherit; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.16s ease;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+    color: #fff; padding: 12px 26px; box-shadow: 0 4px 14px rgba(79,110,247,0.35);
+  }
+  .btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,110,247,0.45); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+  .btn-ghost {
+    background: #fff; color: var(--brand-dark); border: 1px solid var(--border-strong); padding: 11px 20px;
+  }
+  .btn-ghost:hover { border-color: var(--brand); background: var(--brand-soft); }
+
+  /* progress */
+  #progress { display: none; }
+  .progress-meta { display: flex; justify-content: space-between; font-size: 13.5px; color: var(--muted); margin-bottom: 10px; }
+  .progress-meta .cur { font-weight: 600; color: var(--text); }
+  .bar { height: 10px; background: #eaeef6; border-radius: 999px; overflow: hidden; }
+  .bar > span {
+    display: block; height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--brand), #7c93ff);
+    border-radius: 999px; transition: width 0.25s ease;
+  }
+
+  /* summary chips */
+  #summary { display: none; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px;
+    border-radius: 999px; font-size: 14px; font-weight: 600; background: #fff;
+    border: 1px solid var(--border); box-shadow: var(--shadow);
+  }
+  .chip .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .chip.total { background: var(--brand-soft); border-color: transparent; color: var(--brand-dark); }
+
+  /* groups */
+  .group { margin-bottom: 14px; }
+  .group > summary {
+    cursor: pointer; font-size: 15.5px; font-weight: 700; padding: 15px 18px;
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    list-style: none; display: flex; align-items: center; gap: 11px; box-shadow: var(--shadow);
+    transition: background 0.14s;
+  }
+  .group > summary:hover { background: #fbfcfe; }
+  .group > summary::-webkit-details-marker { display: none; }
+  .group > summary .chevron { margin-left: auto; color: var(--muted); transition: transform 0.18s; font-size: 13px; }
+  .group[open] > summary .chevron { transform: rotate(90deg); }
+  .group[open] > summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .group .gcount {
+    background: #f1f4fa; color: var(--muted); font-size: 13px; font-weight: 700;
+    padding: 1px 10px; border-radius: 999px; min-width: 26px; text-align: center;
+  }
+  .group-body {
+    border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius); padding: 8px; background: #fbfcfe;
+  }
+  .entry {
+    border: 1px solid var(--border); border-left-width: 4px; border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 8px; background: #fff; box-shadow: 0 1px 4px rgba(31,45,80,0.04);
+  }
+  .entry h4 { margin: 0 0 6px; font-size: 14.5px; font-family: ui-monospace, "SF Mono", Menlo, monospace; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    display: inline-block; font-size: 11.5px; font-weight: 700; padding: 3px 9px;
+    border-radius: 999px; color: #fff;
+  }
+  .reasons { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
+  .reasons li { margin: 2px 0; }
+  .source { font-size: 13px; color: var(--muted); margin-top: 8px; }
+  .source a { color: var(--brand); word-break: break-all; }
+  .missing-box {
+    background: linear-gradient(180deg, #fff7f7, #fef2f2); border: 1px solid #fbcaca;
+    color: #a11f1f; border-radius: var(--radius); padding: 14px 18px; font-size: 14px; margin-bottom: 22px;
+  }
+  .missing-box code { font-family: ui-monospace, monospace; background: rgba(239,68,68,0.1); padding: 1px 6px; border-radius: 5px; }
+  #error {
+    display: none; background: linear-gradient(180deg, #fff7f7, #fef2f2); border: 1px solid #fbcaca;
+    color: #a11f1f; border-radius: var(--radius); padding: 14px 18px; margin-bottom: 22px;
+  }
+  .empty { color: var(--muted); font-size: 13.5px; padding: 10px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">📚</div>
+    <h1>Paper-BibChecker</h1>
+    <p class="sub">面向论文投稿的 BibTeX 引用核验工具</p>
+    <p class="sub">欢迎使用，项目地址：<a href="https://github.com/MLNLP-World/Paper-BibChecker" target="_blank" rel="noopener">https://github.com/MLNLP-World/Paper-BibChecker</a></p>
+  </header>
+
+  <div class="disclaimer">
+    <span class="ic">⚠️</span>
+    <span><b>说明：</b>本页在你的浏览器本地运行，通过 <b>OpenAlex</b>、<b>Crossref</b>
+    与后端多个数据源（arXiv、DBLP、ICLR、NeurIPS、ICML、CVPR、ACL 等官方论文集）
+    完成，仅覆盖这些源，对最新论文可能漏报；"疑似幻觉"判断偏保守，仅供参考，请逐条人工核对重要文献。</span>
+  </div>
+
+  <div id="error"></div>
+
+  <div class="card">
+    <div class="drop-grid">
+      <div class="dropzone" id="dz-bib" tabindex="0" role="button" aria-label="上传 Bib 文件">
+        <input type="file" id="bib" accept=".bib" hidden />
+        <div class="dz-default">
+          <div class="dz-icon">📄</div>
+          <div class="dz-title">Bib 文件 <span class="req">*</span></div>
+          <div class="dz-hint">拖拽 .bib 到这里，或点击选择</div>
+        </div>
+        <div class="dz-file">
+          <span>✓</span><span class="name"></span>
+          <button type="button" class="dz-clear" data-target="bib" title="移除">✕</button>
+        </div>
+      </div>
+
+      <div class="dropzone" id="dz-tex" tabindex="0" role="button" aria-label="上传 TeX 文件">
+        <input type="file" id="tex" accept=".tex" hidden />
+        <div class="dz-default">
+          <div class="dz-icon">📝</div>
+          <div class="dz-title">TeX 文件 <span class="opt">可选</span></div>
+          <div class="dz-hint">提供后只检查论文实际引用的条目</div>
+        </div>
+        <div class="dz-file">
+          <span>✓</span><span class="name"></span>
+          <button type="button" class="dz-clear" data-target="tex" title="移除">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="options">
+      <div class="field">
+        <label for="batch">并行数量</label>
+        <input type="number" id="batch" value="4" min="1" step="1" />
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="unused" />
+        <span class="track"></span>
+        <span>同时检查未被引用的条目</span>
+      </label>
+    </div>
+
+    <div class="actions">
+      <button id="run" class="btn-primary">开始检查</button>
+      <button id="download" class="btn-ghost" style="display:none;">⬇ 下载 JSON 报告</button>
+    </div>
+  </div>
+
+  <div class="card" id="progress">
+    <div class="progress-meta">
+      <span id="progress-label" class="cur">准备中…</span>
+      <span id="progress-count">0 / 0</span>
+    </div>
+    <div class="bar"><span id="bar-fill"></span></div>
+  </div>
+
+  <div id="summary"></div>
+  <div id="missing"></div>
+  <div id="results"></div>
+</div>
+
+<script type="module">
+import { parseBib, findCitationKeys } from "./src/parser.js";
+import { checkAll } from "./src/engine.js";
+import { createBackendFallback } from "./src/backend.js";
+
+const STATUS_META = {
+  validated:            { label: "✅ 通过",       color: "#10b981" },
+  needs_review:         { label: "⚠️ 信息需核对", color: "#f59e0b" },
+  unconfirmed:          { label: "❓ 无法确认",   color: "#94a3b8" },
+  likely_hallucination: { label: "❌ 疑似幻觉",   color: "#ef4444" },
+};
+const GROUP_ORDER = ["likely_hallucination", "needs_review", "unconfirmed", "validated"];
+const FIELD_LABELS = {
+  title: "标题", authors: "作者", year: "年份",
+  venue: "会议或期刊", doi: "DOI", arxiv_id: "arXiv ID",
+};
+
+const el = (id) => document.getElementById(id);
+let collected = [];
+let groupBodies = {};
+
+/* ---------- drag & drop upload ---------- */
+function setupDropzone(zoneId, inputId, accept) {
+  const zone = el(zoneId);
+  const input = el(inputId);
+  const nameEl = zone.querySelector(".dz-file .name");
+
+  const reflect = () => {
+    if (input.files && input.files.length) {
+      zone.classList.add("filled");
+      nameEl.textContent = input.files[0].name;
+    } else {
+      zone.classList.remove("filled");
+      nameEl.textContent = "";
+    }
+  };
+
+  const accepts = (file) => !accept || file.name.toLowerCase().endsWith(accept);
+
+  zone.addEventListener("click", (e) => {
+    if (e.target.classList.contains("dz-clear")) return;
+    input.click();
+  });
+  zone.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); }
+  });
+  input.addEventListener("change", reflect);
+
+  ["dragenter", "dragover"].forEach((ev) =>
+    zone.addEventListener(ev, (e) => {
+      e.preventDefault(); e.stopPropagation();
+      zone.classList.add("dragover");
+    })
+  );
+  ["dragleave", "dragend"].forEach((ev) =>
+    zone.addEventListener(ev, (e) => {
+      e.preventDefault(); e.stopPropagation();
+      zone.classList.remove("dragover");
+    })
+  );
+  zone.addEventListener("drop", (e) => {
+    e.preventDefault(); e.stopPropagation();
+    zone.classList.remove("dragover");
+    const files = e.dataTransfer.files;
+    if (!files || !files.length) return;
+    if (!accepts(files[0])) {
+      showError(`请拖入 ${accept} 文件`);
+      return;
+    }
+    // DataTransfer -> assign to the hidden input so FormData picks it up
+    const dt = new DataTransfer();
+    dt.items.add(files[0]);
+    input.files = dt.files;
+    reflect();
+  });
+}
+
+// clear buttons
+document.querySelectorAll(".dz-clear").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const input = el(btn.dataset.target);
+    input.value = "";
+    input.dispatchEvent(new Event("change"));
+  });
+});
+
+setupDropzone("dz-bib", "bib", ".bib");
+setupDropzone("dz-tex", "tex", ".tex");
+
+/* ---------- rendering (unchanged logic) ---------- */
+function formatDifferences(comparison) {
+  const out = [];
+  if (!comparison) return out;
+  for (const [field, item] of Object.entries(comparison)) {
+    const status = item.status;
+    if (field === "authors" && (status === "minor_difference" || status === "major_mismatch")) {
+      if (item.added && item.added.length) out.push("作者新增：" + item.added.join("；"));
+      if (item.removed && item.removed.length) out.push("作者删除：" + item.removed.join("；"));
+      if (item.reordered && item.reordered.length) out.push("作者顺序：" + item.reordered.join("；"));
+      const noneListed = !(item.added && item.added.length) &&
+                         !(item.removed && item.removed.length) &&
+                         !(item.reordered && item.reordered.length);
+      if (status === "major_mismatch" && noneListed) out.push("大部分作者无法对应");
+    } else if (status === "mismatch") {
+      const label = FIELD_LABELS[field] || field;
+      out.push(`${label}：Bib=${JSON.stringify(item.bibtex)}；检索=${JSON.stringify(item.retrieved)}`);
+    }
+  }
+  return out;
+}
+
+function bestCandidateSource(result) {
+  const c = (result.candidates || [])[0];
+  if (!c) return null;
+  if (result.status === "validated") return null;
+  if (c.identifier_match || (c.title_score >= 0.72) || result.status === "needs_review") {
+    return { source: c.source, url: c.url };
+  }
+  return null;
+}
+
+function renderEntry(msg) {
+  const result = msg.result;
+  const meta = STATUS_META[result.status] || { label: result.status, color: "#888" };
+  const div = document.createElement("div");
+  div.className = "entry";
+  div.style.borderLeftColor = meta.color;
+
+  const h4 = document.createElement("h4");
+  const keySpan = document.createElement("span");
+  keySpan.textContent = msg.key;
+  h4.appendChild(keySpan);
+  const badge = document.createElement("span");
+  badge.className = "badge";
+  badge.style.background = meta.color;
+  badge.textContent = meta.label;
+  h4.appendChild(badge);
+  div.appendChild(h4);
+
+  const lines = [];
+  if (result.reasons && result.reasons.length) lines.push(result.reasons[0]);
+  for (const d of formatDifferences(result.field_comparison)) lines.push(d);
+  if (lines.length) {
+    const ul = document.createElement("ul");
+    ul.className = "reasons";
+    for (const line of lines) {
+      const li = document.createElement("li");
+      li.textContent = line;
+      ul.appendChild(li);
+    }
+    div.appendChild(ul);
+  }
+
+  const src = bestCandidateSource(result);
+  if (src) {
+    const p = document.createElement("p");
+    p.className = "source";
+    if (src.url) {
+      p.innerHTML = `来源：${escapeHtml(src.source)} · <a href="${escapeHtml(src.url)}" target="_blank" rel="noopener">${escapeHtml(src.url)}</a>`;
+    } else {
+      p.textContent = `来源：${src.source}`;
+    }
+    div.appendChild(p);
+  }
+
+  groupBodies[result.status].appendChild(div);
+  updateGroupCount(result.status);
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function ensureGroups() {
+  const container = el("results");
+  container.innerHTML = "";
+  groupBodies = {};
+  for (const status of GROUP_ORDER) {
+    const meta = STATUS_META[status];
+    const details = document.createElement("details");
+    details.className = "group";
+    if (status === "likely_hallucination" || status === "needs_review") details.open = true;
+    const summary = document.createElement("summary");
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    dot.style.cssText = `width:12px;height:12px;border-radius:50%;background:${meta.color}`;
+    summary.appendChild(dot);
+    const title = document.createElement("span");
+    title.textContent = meta.label;
+    summary.appendChild(title);
+    const count = document.createElement("span");
+    count.className = "gcount";
+    count.id = `count-${status}`;
+    count.textContent = "0";
+    summary.appendChild(count);
+    const chevron = document.createElement("span");
+    chevron.className = "chevron";
+    chevron.textContent = "▶";
+    summary.appendChild(chevron);
+    details.appendChild(summary);
+    const body = document.createElement("div");
+    body.className = "group-body";
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "暂无";
+    empty.id = `empty-${status}`;
+    body.appendChild(empty);
+    details.appendChild(body);
+    container.appendChild(details);
+    groupBodies[status] = body;
+  }
+}
+
+function updateGroupCount(status) {
+  const body = groupBodies[status];
+  const n = body.querySelectorAll(".entry").length;
+  el(`count-${status}`).textContent = String(n);
+  const empty = el(`empty-${status}`);
+  if (empty && n > 0) empty.style.display = "none";
+}
+
+function renderSummary(counts) {
+  const box = el("summary");
+  box.innerHTML = "";
+  box.style.display = "flex";
+  let total = 0;
+  for (const status of GROUP_ORDER) {
+    const n = counts[status] || 0;
+    total += n;
+    const meta = STATUS_META[status];
+    const chip = document.createElement("span");
+    chip.className = "chip";
+    chip.innerHTML = `<span class="dot" style="background:${meta.color}"></span>${meta.label} ${n}`;
+    box.appendChild(chip);
+  }
+  const chip = document.createElement("span");
+  chip.className = "chip total";
+  chip.textContent = `合计 ${total}`;
+  box.appendChild(chip);
+}
+
+function renderMissing(missing) {
+  const box = el("missing");
+  box.innerHTML = "";
+  if (!missing || !missing.length) return;
+  const div = document.createElement("div");
+  div.className = "missing-box";
+  div.innerHTML = `<b>TeX 引用了但 Bib 中缺失的引用键（${missing.length}）：</b> ` +
+    missing.map((k) => `<code>${escapeHtml(k)}</code>`).join(" ");
+  box.appendChild(div);
+}
+
+function showError(text) {
+  const box = el("error");
+  box.style.display = "block";
+  box.textContent = text;
+}
+
+function readFileText(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error("读取文件失败"));
+    reader.readAsText(file, "utf-8");
+  });
+}
+
+async function run() {
+  const bibInput = el("bib");
+  if (!bibInput.files.length) { showError("请先选择或拖入一个 .bib 文件"); return; }
+  el("error").style.display = "none";
+  el("summary").style.display = "none";
+  el("missing").innerHTML = "";
+  el("download").style.display = "none";
+  collected = [];
+  ensureGroups();
+
+  const concurrency = Math.max(1, parseInt(el("batch").value || "4", 10));
+  const email = "";
+  const checkUnused = el("unused").checked;
+  const fallback = createBackendFallback("https://paper-bibchecker.onrender.com");
+
+  el("run").disabled = true;
+  el("progress").style.display = "block";
+  el("progress-label").textContent = "解析文件中…";
+  el("bar-fill").style.width = "0%";
+  el("progress-count").textContent = "0 / 0";
+
+  try {
+    // 1. 本地解析 bib（+ 可选 tex），复刻 server.py 的选键逻辑。
+    const bibText = await readFileText(bibInput.files[0]);
+    let entries;
+    try {
+      entries = parseBib(bibText);
+    } catch (e) {
+      throw new Error("解析 Bib 失败：" + (e.message || e));
+    }
+    const allKeys = new Set(entries.keys());
+
+    let cited;
+    if (el("tex").files.length) {
+      const texText = await readFileText(el("tex").files[0]);
+      cited = findCitationKeys({ "__root__.tex": texText });
+    } else {
+      cited = new Set(allKeys);
+    }
+    const missing = [...cited].filter((k) => !allKeys.has(k)).sort();
+    const selected = checkUnused
+      ? [...allKeys].sort()
+      : [...cited].filter((k) => allKeys.has(k)).sort();
+
+    renderMissing(missing);
+    const total = selected.length;
+    el("progress-count").textContent = `0 / ${total}`;
+    el("progress-label").textContent = "检查中…";
+    if (!total) {
+      el("progress-label").textContent = "没有需要检查的条目";
+      el("run").disabled = false;
+      return;
+    }
+
+    // 2. 本地并发检查，逐条渲染。
+    const counts = {};
+    await checkAll(entries, selected, {
+      concurrency,
+      email,
+      fallback,
+      onResult: (index, key, result) => {
+        collected.push(result);
+        counts[result.status] = (counts[result.status] || 0) + 1;
+        renderEntry({ key, result });
+        const pct = total ? Math.round((index / total) * 100) : 0;
+        el("bar-fill").style.width = pct + "%";
+        el("progress-count").textContent = `${index} / ${total}`;
+        el("progress-label").textContent = `正在检查：${key}`;
+      },
+    });
+
+    renderSummary(counts);
+    el("progress-label").textContent = "✓ 检查完成";
+    el("bar-fill").style.width = "100%";
+    if (collected.length) el("download").style.display = "inline-block";
+  } catch (err) {
+    showError("检查出错：" + (err.message || err));
+    el("progress").style.display = "none";
+  } finally {
+    el("run").disabled = false;
+  }
+}
+
+function download() {
+  const payload = { results: collected };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "bibchecker_report.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// prevent browser from opening a file when dropped outside a zone
+["dragover", "drop"].forEach((ev) =>
+  window.addEventListener(ev, (e) => { e.preventDefault(); }, false)
+);
+
+el("run").addEventListener("click", run);
+el("download").addEventListener("click", download);
+</script>
+</body>
+</html>

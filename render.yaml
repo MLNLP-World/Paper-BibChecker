@@ -1,0 +1,39 @@
+# Render 蓝图（Blueprint）：一键把本仓库部署为 Docker Web 服务。
+#
+# 用法：
+#   1. 把本仓库推到 GitHub
+#   2. 登录 https://render.com → New → Blueprint → 选中该仓库
+#   3. Render 读取本文件，自动创建服务并构建
+#
+# 免费实例（plan: free）在无人访问约 15 分钟后休眠，
+# 下次访问需冷启动 ~30–50 秒，之后恢复正常。适合 Demo。
+
+services:
+  - type: web
+    name: paper-bibchecker
+    runtime: docker
+    dockerfilePath: ./web/Dockerfile
+    dockerContext: .
+    plan: free
+    region: singapore          # 离中国较近的免费区域
+    healthCheckPath: /healthz
+    autoDeploy: true           # push 到默认分支即自动重新部署
+    envVars:
+      - key: PUBLIC_MODE
+        value: "1"
+      - key: MAX_ENTRIES
+        value: "60"
+      - key: MAX_CONCURRENT
+        value: "8"
+      - key: MAX_BATCH_SIZE
+        value: "8"
+      - key: MAX_UPLOAD_MB
+        value: "5"
+      # 以下为可选，用于提高数据源配额；在 Render 面板里填真实值即可。
+      # sync: false 表示不写进仓库、由你在网页上手动填。
+      - key: OPENALEX_EMAIL
+        sync: false
+      - key: CROSSREF_EMAIL
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false

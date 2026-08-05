@@ -10,3 +10,8 @@ requires-python = ">=3.10"
 
 [project.scripts]
 bibchecker = "bibchecker.cli:main"
+
+# 显式声明打包范围，避免 setuptools 自动发现同时看到 web/ 和 bibchecker/
+# 而报 "Multiple top-level packages" 错误。
+[tool.setuptools]
+packages = ["bibchecker"]

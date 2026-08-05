@@ -1,0 +1,15 @@
+# 构建镜像时排除这些，加快上传与构建、缩小镜像。
+.git
+.gitignore
+.idea
+.vscode
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+paper_bibchecker.egg-info
+.DS_Store
+data/
+memory/
+*.md
+!web/requirements.txt

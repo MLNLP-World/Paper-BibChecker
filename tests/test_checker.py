@@ -351,6 +351,39 @@ def test_author_name_order_and_initials_are_not_mismatches():
     assert "Pieter Abbeel" in authors["reordered"][0]
 
 
+def test_similar_full_given_names_are_reported_as_author_difference():
+    entry = BibEntry(
+        "authors",
+        "article",
+        {
+            "title": "Multidimensional consistency improves reasoning in language models",
+            "author": (
+                "Lai, Huiyuan and Zhang, Xiaoyu and Nissim, Malvina"
+            ),
+            "year": "2025",
+            "eprint": "2503.02670",
+        },
+    )
+    provider = LocalProvider(
+        [
+            {
+                "title": "Multidimensional consistency improves reasoning in language models",
+                "authors": ["Lai, Huiyuan", "Zhang, Xiao", "Nissim, Malvina"],
+                "year": 2025,
+                "eprint": "2503.02670",
+            }
+        ]
+    )
+
+    result = check_entry(entry, provider)
+
+    assert result.status == NEEDS_REVIEW
+    authors = result.field_comparison["authors"]
+    assert authors["status"] == "minor_difference"
+    assert authors["added"] == ["Xiao Zhang（检索第2位）"]
+    assert authors["removed"] == ["Xiaoyu Zhang（Bib第2位）"]
+
+
 def test_one_author_added_or_removed_is_summarized():
     entry = BibEntry(
         "authors",

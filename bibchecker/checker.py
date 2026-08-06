@@ -1270,24 +1270,47 @@ def _author_diff_summary(item: Mapping[str, Any]) -> str:
     return " ".join(parts)
 
 
-def _author_identity(author: str) -> tuple[str, str]:
+def _author_identity(author: str) -> tuple[str, tuple[str, ...]]:
     value = _normalize_text(author)
     if not value:
-        return "", ""
+        return "", ()
     if "," in author:
         family, given = author.split(",", 1)
-        return _normalize_text(family), _given_initials(given)
+        return _normalize_text(family), tuple(_normalize_text(given).split())
     tokens = value.split()
-    return tokens[-1], _given_initials(" ".join(tokens[:-1]))
+    return tokens[-1], tuple(tokens[:-1])
 
 
-def _given_initials(value: str) -> str:
-    return "".join(token[0] for token in _normalize_text(value).split() if token)
+def _given_names_match(
+    left: Sequence[str],
+    right: Sequence[str],
+) -> bool:
+    """Match full given names while allowing explicit initials."""
+
+    if not left or not right:
+        return True
+    common_length = min(len(left), len(right))
+    for left_token, right_token in zip(left[:common_length], right[:common_length]):
+        if left_token == right_token:
+            continue
+        if (
+            len(left_token) == 1
+            and right_token.startswith(left_token)
+        ) or (
+            len(right_token) == 1
+            and left_token.startswith(right_token)
+        ):
+            continue
+        return False
+    extra_tokens = (
+        left[common_length:] if len(left) > common_length else right[common_length:]
+    )
+    return all(len(token) == 1 for token in extra_tokens)
 
 
 def _authors_match(left: str, right: str) -> bool:
-    left_family, left_initials = _author_identity(left)
-    right_family, right_initials = _author_identity(right)
+    left_family, left_given = _author_identity(left)
+    right_family, right_given = _author_identity(right)
     if not left_family or not right_family:
         return False
     family_match = (
@@ -1296,13 +1319,9 @@ def _authors_match(left: str, right: str) -> bool:
     )
     if not family_match:
         return False
-    if not left_initials or not right_initials:
+    if not left_given or not right_given:
         return True
-    return (
-        left_initials == right_initials
-        or left_initials.startswith(right_initials)
-        or right_initials.startswith(left_initials)
-    )
+    return _given_names_match(left_given, right_given)
 
 
 def _match_authors(

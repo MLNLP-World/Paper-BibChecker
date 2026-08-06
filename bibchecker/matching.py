@@ -674,28 +674,56 @@ def _is_truncation_marker(author: str) -> bool:
     return normalized in _TRUNCATION_MARKERS or bool(_TRUNCATION_RE.search(author))
 
 
-def _author_identity(author: str) -> tuple[str, str]:
+def _author_identity(author: str) -> tuple[str, tuple[str, ...]]:
     value = _normalize_text(author)
     if not value:
-        return "", ""
+        return "", ()
     if "," in author:
         family, given = author.split(",", 1)
         family_key = _normalize_text(family)
-        given_key = _initials(given)
+        given_key = tuple(_normalize_text(given).split())
     else:
         tokens = value.split()
         family_key = tokens[-1]
-        given_key = _initials(" ".join(tokens[:-1]))
+        given_key = tuple(tokens[:-1])
     return family_key, given_key
 
 
-def _initials(value: str) -> str:
-    return "".join(token[0] for token in _normalize_text(value).split() if token)
+def _given_names_match(
+    left: Sequence[str],
+    right: Sequence[str],
+) -> bool:
+    """Match full given names while allowing explicit initials.
+
+    A prefix comparison between full names makes ``Xiaoyu`` match ``Xiao``.
+    Only one-character tokens are initials, and omitted middle initials are
+    tolerated.
+    """
+
+    if not left or not right:
+        return True
+    common_length = min(len(left), len(right))
+    for left_token, right_token in zip(left[:common_length], right[:common_length]):
+        if left_token == right_token:
+            continue
+        if (
+            len(left_token) == 1
+            and right_token.startswith(left_token)
+        ) or (
+            len(right_token) == 1
+            and left_token.startswith(right_token)
+        ):
+            continue
+        return False
+    extra_tokens = (
+        left[common_length:] if len(left) > common_length else right[common_length:]
+    )
+    return all(len(token) == 1 for token in extra_tokens)
 
 
 def _author_pair_score(left: str, right: str) -> float:
-    left_family, left_initials = _author_identity(left)
-    right_family, right_initials = _author_identity(right)
+    left_family, left_given = _author_identity(left)
+    right_family, right_given = _author_identity(right)
     if not left_family or not right_family:
         return 0.0
     family_match = left_family == right_family or (
@@ -704,14 +732,10 @@ def _author_pair_score(left: str, right: str) -> float:
     )
     if not family_match:
         return 0.0
-    if left_initials and right_initials:
-        if left_initials == right_initials:
-            return 1.0
-        if left_initials.startswith(right_initials) or right_initials.startswith(
-            left_initials
-        ):
-            return 0.92
-        return 0.0
+    if left_given and right_given:
+        if not _given_names_match(left_given, right_given):
+            return 0.0
+        return 1.0 if left_given == right_given else 0.92
     return 0.78
 
 

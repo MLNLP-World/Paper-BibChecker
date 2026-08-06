@@ -53,6 +53,23 @@ def test_reordered_authors_match_by_identity_not_position():
     assert len(comparison["reordered"]) == 3
 
 
+def test_similar_full_given_names_are_not_treated_as_initials():
+    comparison = compare_authors(["Zhang, Xiaoyu"], ["Zhang, Xiao"])
+
+    assert comparison["status"] == "major_mismatch"
+    assert comparison["added"] == ["Xiao Zhang（检索第1位）"]
+    assert comparison["removed"] == ["Xiaoyu Zhang（Bib第1位）"]
+
+
+def test_missing_middle_initial_still_matches():
+    comparison = compare_authors(
+        ["Jordan, Michael I."],
+        ["Michael Jordan"],
+    )
+
+    assert comparison["status"] == "match"
+
+
 def test_missing_author_metadata_is_not_a_mismatch():
     entry = BibEntry(
         "paper",

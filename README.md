@@ -78,7 +78,7 @@ bibchecker references.bib
 
 **示例：**
 
-仓库在 `examples/example_ref.bib` 中提供了一个包含 32 条引用的示例，其中包括 10+ 篇被 ICLR 2026 desk reject 的幻觉参考文献，也包括一定比例无幻觉、需核对的参考文献。
+仓库在 `examples/example_ref.bib` 中提供了一个包含 33 条引用的示例，其中包括 10+ 篇被 ICLR 2026 desk reject 的幻觉参考文献，也包括一定比例无幻觉、需核对的参考文献。
 
 ```text
 examples/example_ref.bib

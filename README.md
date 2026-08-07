@@ -4,7 +4,7 @@
   <img alt="version" src="https://img.shields.io/badge/version-v0.1.0-blue?style=for-the-badge&color=2563EB" />
   <img alt="status" src="https://img.shields.io/badge/status-building-success?style=for-the-badge&color=16A34A" />
   <img alt="PRs" src="https://img.shields.io/badge/PRs-welcome-orange?style=for-the-badge&color=F97316" />
-  <img alt="stars" src="https://img.shields.io/github/stars/RyanLiu112/Paper-BibChecker?style=for-the-badge&color=FBBF24" />
+  <img alt="stars" src="https://img.shields.io/github/stars/MLNLP-World/Paper-BibChecker?style=for-the-badge&color=FBBF24" />
 </p>
 
 <p align="center">
@@ -49,7 +49,7 @@
 需要 **Python 3.10 或更高版本**。
 
 ```bash
-git clone https://github.com/RyanLiu112/Paper-BibChecker.git
+git clone https://github.com/MLNLP-World/Paper-BibChecker.git
 cd Paper-BibChecker
 python -m pip install -e .
 ```

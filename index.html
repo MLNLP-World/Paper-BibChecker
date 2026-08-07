@@ -82,8 +82,7 @@
   }
 
   /* drop zones */
-  .drop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
-  @media (max-width: 620px) { .drop-grid { grid-template-columns: 1fr; } }
+  .drop-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 20px; }
   .dropzone {
     position: relative;
     border: 2px dashed var(--border-strong);
@@ -143,18 +142,6 @@
     border-radius: var(--radius-sm); font-size: 14px; background: #fff; transition: border 0.15s;
   }
   .field input[type="number"]:focus { outline: none; border-color: var(--brand); }
-  .switch { display: flex; align-items: center; gap: 9px; font-size: 14px; cursor: pointer; user-select: none; }
-  .switch input { position: absolute; opacity: 0; }
-  .switch .track {
-    width: 40px; height: 22px; border-radius: 999px; background: var(--border-strong);
-    position: relative; transition: background 0.18s;
-  }
-  .switch .track::after {
-    content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px;
-    border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2); transition: transform 0.18s;
-  }
-  .switch input:checked + .track { background: var(--brand); }
-  .switch input:checked + .track::after { transform: translateX(18px); }
 
   .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 22px; }
   button {
@@ -227,11 +214,6 @@
   .reasons li { margin: 2px 0; }
   .source { font-size: 13px; color: var(--muted); margin-top: 8px; }
   .source a { color: var(--brand); word-break: break-all; }
-  .missing-box {
-    background: linear-gradient(180deg, #fff7f7, #fef2f2); border: 1px solid #fbcaca;
-    color: #a11f1f; border-radius: var(--radius); padding: 14px 18px; font-size: 14px; margin-bottom: 22px;
-  }
-  .missing-box code { font-family: ui-monospace, monospace; background: rgba(239,68,68,0.1); padding: 1px 6px; border-radius: 5px; }
   #error {
     display: none; background: linear-gradient(180deg, #fff7f7, #fef2f2); border: 1px solid #fbcaca;
     color: #a11f1f; border-radius: var(--radius); padding: 14px 18px; margin-bottom: 22px;
@@ -271,19 +253,6 @@
           <button type="button" class="dz-clear" data-target="bib" title="移除">✕</button>
         </div>
       </div>
-
-      <div class="dropzone" id="dz-tex" tabindex="0" role="button" aria-label="上传 TeX 文件">
-        <input type="file" id="tex" accept=".tex" hidden />
-        <div class="dz-default">
-          <div class="dz-icon">📝</div>
-          <div class="dz-title">TeX 文件 <span class="opt">可选</span></div>
-          <div class="dz-hint">提供后只检查论文实际引用的条目</div>
-        </div>
-        <div class="dz-file">
-          <span>✓</span><span class="name"></span>
-          <button type="button" class="dz-clear" data-target="tex" title="移除">✕</button>
-        </div>
-      </div>
     </div>
 
     <div class="options">
@@ -291,11 +260,6 @@
         <label for="batch">并行数量</label>
         <input type="number" id="batch" value="4" min="1" step="1" />
       </div>
-      <label class="switch">
-        <input type="checkbox" id="unused" />
-        <span class="track"></span>
-        <span>同时检查未被引用的条目</span>
-      </label>
     </div>
 
     <div class="actions">
@@ -313,12 +277,11 @@
   </div>
 
   <div id="summary"></div>
-  <div id="missing"></div>
   <div id="results"></div>
 </div>
 
 <script type="module">
-import { parseBib, findCitationKeys } from "./src/parser.js";
+import { parseBib } from "./src/parser.js";
 import { checkAll } from "./src/engine.js";
 import { createBackendFallback } from "./src/backend.js";
 
@@ -405,7 +368,6 @@ document.querySelectorAll(".dz-clear").forEach((btn) => {
 });
 
 setupDropzone("dz-bib", "bib", ".bib");
-setupDropzone("dz-tex", "tex", ".tex");
 
 /* ---------- rendering (unchanged logic) ---------- */
 function formatDifferences(comparison) {
@@ -560,17 +522,6 @@ function renderSummary(counts) {
   box.appendChild(chip);
 }
 
-function renderMissing(missing) {
-  const box = el("missing");
-  box.innerHTML = "";
-  if (!missing || !missing.length) return;
-  const div = document.createElement("div");
-  div.className = "missing-box";
-  div.innerHTML = `<b>TeX 引用了但 Bib 中缺失的引用键（${missing.length}）：</b> ` +
-    missing.map((k) => `<code>${escapeHtml(k)}</code>`).join(" ");
-  box.appendChild(div);
-}
-
 function showError(text) {
   const box = el("error");
   box.style.display = "block";
@@ -591,14 +542,12 @@ async function run() {
   if (!bibInput.files.length) { showError("请先选择或拖入一个 .bib 文件"); return; }
   el("error").style.display = "none";
   el("summary").style.display = "none";
-  el("missing").innerHTML = "";
   el("download").style.display = "none";
   collected = [];
   ensureGroups();
 
   const concurrency = Math.max(1, parseInt(el("batch").value || "4", 10));
   const email = "";
-  const checkUnused = el("unused").checked;
   const fallback = createBackendFallback("https://paper-bibchecker.onrender.com");
 
   el("run").disabled = true;
@@ -608,7 +557,7 @@ async function run() {
   el("progress-count").textContent = "0 / 0";
 
   try {
-    // 1. 本地解析 bib（+ 可选 tex），复刻 server.py 的选键逻辑。
+    // 1. 本地解析 bib，检查全部条目。
     const bibText = await readFileText(bibInput.files[0]);
     let entries;
     try {
@@ -617,20 +566,8 @@ async function run() {
       throw new Error("解析 Bib 失败：" + (e.message || e));
     }
     const allKeys = new Set(entries.keys());
+    const selected = [...allKeys].sort();
 
-    let cited;
-    if (el("tex").files.length) {
-      const texText = await readFileText(el("tex").files[0]);
-      cited = findCitationKeys({ "__root__.tex": texText });
-    } else {
-      cited = new Set(allKeys);
-    }
-    const missing = [...cited].filter((k) => !allKeys.has(k)).sort();
-    const selected = checkUnused
-      ? [...allKeys].sort()
-      : [...cited].filter((k) => allKeys.has(k)).sort();
-
-    renderMissing(missing);
     const total = selected.length;
     el("progress-count").textContent = `0 / ${total}`;
     el("progress-label").textContent = "检查中…";

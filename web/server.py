@@ -15,7 +15,6 @@ import threading
 from pathlib import Path
 import shutil
 import tempfile
-from typing import Optional
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,7 +24,6 @@ from pydantic import BaseModel
 from bibchecker import (
     check_entry,
     default_providers,
-    find_citation_keys,
     parse_bib,
 )
 
@@ -124,10 +122,8 @@ def healthz() -> dict:
 @app.post("/api/check")
 def check(
     bib: UploadFile = File(...),
-    tex: Optional[UploadFile] = File(None),
     timeout: float = Form(10.0),
     batch_size: int = Form(4),
-    check_unused: bool = Form(False),
 ) -> StreamingResponse:
     if batch_size < 1:
         raise HTTPException(status_code=400, detail="batch_size 必须至少为 1")
@@ -154,11 +150,6 @@ def check(
         bib_path = workdir / "input.bib"
         _save_upload(bib, bib_path)
 
-        tex_path: Optional[Path] = None
-        if tex is not None and tex.filename:
-            tex_path = workdir / "input.tex"
-            _save_upload(tex, tex_path)
-
         # 镜像 CLI 的选键逻辑（bibchecker/cli.py _run）。
         try:
             entries = parse_bib(bib_path)
@@ -166,11 +157,7 @@ def check(
             shutil.rmtree(workdir, ignore_errors=True)
             raise HTTPException(status_code=400, detail=f"解析 Bib 失败：{error}")
 
-        cited = find_citation_keys(tex_path) if tex_path else set(entries)
-        missing = sorted(cited.difference(entries))
-        keys = sorted(
-            set(entries) if check_unused else cited.intersection(entries)
-        )
+        keys = sorted(set(entries))
         truncated = 0
         if MAX_ENTRIES and len(keys) > MAX_ENTRIES:
             truncated = len(keys) - MAX_ENTRIES
@@ -189,7 +176,6 @@ def check(
                 {
                     "type": "start",
                     "total": len(keys),
-                    "missing": missing,
                     "truncated": truncated,
                     "max_entries": MAX_ENTRIES,
                 }

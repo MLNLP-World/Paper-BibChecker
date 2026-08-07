@@ -33,7 +33,7 @@
 
 ### 0. 在线体验
 
-链接：http://mlnlp-world.github.io/Paper-BibChecker
+链接：https://mlnlp-world.github.io/Paper-BibChecker
 
 ### 1. 安装
 

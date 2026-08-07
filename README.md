@@ -31,6 +31,10 @@
 
 ## 🚀 快速开始
 
+### 0. 在线体验
+
+链接：http://mlnlp-world.github.io/Paper-BibChecker
+
 ### 1. 安装
 
 需要 **Python 3.10 或更高版本**。

@@ -27,6 +27,15 @@
 
 ---
 
+<a id="changelog"></a>
+
+## 📅 更新日志
+
+- **2026.08.07** — 上线网页版，无需安装，打开即用：[https://mlnlp-world.github.io/Paper-BibChecker](https://mlnlp-world.github.io/Paper-BibChecker)（在线演示已做并发与用量限制，高峰期或大批量核验可能需要排队，建议在本地使用命令行版本）。
+- **2026.08.03** — 项目首次开源发布。
+
+---
+
 <a id="quick-start"></a>
 
 ## 🚀 快速开始
@@ -275,7 +284,6 @@ Paper-BibChecker 会对 BibTeX 中的以下信息进行交叉核验：
 ## 🗺️ TODO
 
 - [ ] **支持直接输入 PDF，自动提取并检查参考文献**
-- [ ] 提供更便捷的在线使用方式
 - [ ] 持续扩展会议、期刊及学术数据源
 
 ## 🤝 欢迎贡献

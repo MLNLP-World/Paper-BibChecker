@@ -5,7 +5,6 @@
   <img alt="status" src="https://img.shields.io/badge/status-building-success?style=for-the-badge&color=16A34A" />
   <img alt="PRs" src="https://img.shields.io/badge/PRs-welcome-orange?style=for-the-badge&color=F97316" />
   <img alt="stars" src="https://img.shields.io/github/stars/RyanLiu112/Paper-BibChecker?style=for-the-badge&color=FBBF24" />
-  
 </p>
 
 <p align="center">
